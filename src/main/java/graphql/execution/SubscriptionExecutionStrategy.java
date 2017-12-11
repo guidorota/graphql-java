@@ -112,7 +112,12 @@ public class SubscriptionExecutionStrategy extends ExecutionStrategy {
 
     private String getRootFieldName(ExecutionStrategyParameters parameters) {
         Field rootField = parameters.field().get(0);
-        return rootField.getAlias() != null ? rootField.getAlias() : rootField.getName();
+        return aliasIsNotEmpty(rootField) ? rootField.getAlias() : rootField.getName();
+    }
+
+    private boolean aliasIsNotEmpty(Field field) {
+        String alias = field.getAlias();
+        return alias != null && !alias.isEmpty();
     }
 
     private ExecutionStrategyParameters firstFieldOfSubscriptionSelection(ExecutionStrategyParameters parameters) {
